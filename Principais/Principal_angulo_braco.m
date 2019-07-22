@@ -1,17 +1,17 @@
 % PRINCIPAL_ANGULO_BRACO
 %
-% Calculando o ‚ngulo formado entre o braÁo e o antebraÁo.
-% Esse cÛdigo obtÈm as posiÁıes das articulaÁıes da pessoa identificada e
-% calcula o ‚ngulo formado entre o braÁo e o antebraÁo.
+% Calculando o √¢ngulo formado entre o bra√ßo e o antebra√ßo.
+% Esse c√≥digo obt√©m as posi√ß√µes das articula√ß√µes da pessoa identificada e
+% calcula o √¢ngulo formado entre o bra√ßo e o antebra√ßo.
 
 clear all;
 close all;
 clc;
 
-% InicializaÁ„o do sensor kinect; ver funÁ„o "iniciar_kinect"
+% Inicializa√ß√£o do sensor kinect; ver fun√ß√£o "iniciar_kinect"
 [himg, colorVid, depthVid] = iniciar_kinect;
 
-buffer = 5;                                                                %buffer para suavizar as saÌdas de ‚ngulo e porcentagem
+buffer = 5;                                                                %buffer para suavizar as sa√≠das de √¢ngulo e porcentagem
 vetor_angulo = 180*ones(1,buffer);
 
 while(ishandle(himg))
@@ -21,16 +21,16 @@ while(ishandle(himg))
     [colorMap,~,colorMetaData] = getdata(colorVid);
     imshow(colorMap, [0 4096]);
     
-    % Verifica se È encontrado algum esqueleto
+    % Verifica se √© encontrado algum esqueleto
     if sum(depthMetaData.IsSkeletonTracked) > 0
         idx = find(depthMetaData.IsSkeletonTracked);
-        % Podem ser encontrados atÈ seis pessoas
-        % idx È o Ìndice referente a pessoa encontrada
+        % Podem ser encontrados at√© seis pessoas
+        % idx √© o √≠ndice referente a pessoa encontrada
         
         skeletonJoints = depthMetaData.JointImageIndices(:,:,idx);
         
         if(idx~=0)
-            % Obtendo regi„o de interesse a partir da imagem fornecida pelo
+            % Obtendo regi√£o de interesse a partir da imagem fornecida pelo
             % kinect
             [angulo_cotovelo, vetor_angulo] = calcular_angulo(depthMetaData,idx,vetor_angulo);
             
