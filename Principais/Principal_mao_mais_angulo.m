@@ -1,7 +1,7 @@
 %% Classificando imagens diretamente do kinect
 % Esse script carrega os dados de imagens salvos anteriormente;
 % inicia a captura do sensor Kinect;
-% e classifica a m„o entre aberta e fechada.
+% e classifica a m√£o entre aberta e fechada.
 clear all;
 close all;
 clc;
@@ -9,11 +9,11 @@ clc;
 % Carregando dados para treinamento do modelo
 load('dados_treinamento_mao.mat');
 
-% CriaÁ„o dos modelos para classificaÁ„o das imagens;
-% ver funÁ„o "multisvm_adaptado"
+% Cria√ß√£o dos modelos para classifica√ß√£o das imagens;
+% ver fun√ß√£o "multisvm_adaptado"
 models = multisvm_adaptado(matriz_imagens_mao,grupo_imagens_mao,matriz_teste_mao);
 
-% InicializaÁ„o do sensor kinect; ver funÁ„o "iniciar_kinect"
+% Inicializa√ß√£o do sensor kinect; ver fun√ß√£o "iniciar_kinect"
 [himg, colorVid, depthVid] = iniciar_kinect;
 
 SkeletonConnectionMap = [[1 2]; % Spine
@@ -36,7 +36,7 @@ SkeletonConnectionMap = [[1 2]; % Spine
     [14 15];
     [15 16]];
 
-buffer = 5;                                                                %buffer para suavizar as saÌdas de ‚ngulo e porcentagem
+buffer = 5;                                                                %buffer para suavizar as sa√≠das de √¢ngulo e porcentagem
 vetor_angulo = 180*ones(1,buffer);
 
 while(ishandle(himg))
@@ -46,15 +46,15 @@ while(ishandle(himg))
     [colorMap,~,colorMetaData] = getdata(colorVid);
     imshow(colorMap, [0 4096]);
     
-    % Verifica se È encontrado algum esqueleto
+    % Verifica se √© encontrado algum esqueleto
     if sum(depthMetaData.IsSkeletonTracked) > 0
         idx = find(depthMetaData.IsSkeletonTracked);
-        % Podem ser encontrados atÈ seis pessoas
-        % idx È o Ìndice referente a pessoa encontrada
+        % Podem ser encontrados at√© seis pessoas
+        % idx √© o √≠ndice referente a pessoa encontrada
         
         skeletonJoints = depthMetaData.JointImageIndices(:,:,idx);
         if(idx~=0)
-            % Obtendo regi„o de interesse a partir da imagem fornecida pelo
+            % Obtendo regi√£o de interesse a partir da imagem fornecida pelo
             % kinect
             limites = gerar_roi(depthMetaData,idx);
            
