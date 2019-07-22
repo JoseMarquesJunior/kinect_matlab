@@ -3,7 +3,7 @@
 % 
 % * carrega os dados de imagens salvos anteriormente;
 % * inicia a captura do sensor Kinect;
-% * e classifica a m„o entre aberta e fechada.
+% * e classifica a m√£o entre aberta e fechada.
 
 clear all;
 close all;
@@ -12,15 +12,15 @@ clc;
 % Carregando dados para treinamento do modelo
 load('dados_treinamento_mao.mat');
 
-% CriaÁ„o dos modelos para classificaÁ„o das imagens;
-% ver funÁ„o "svm_multiclasse"
+% Cria√ß√£o dos modelos para classifica√ß√£o das imagens;
+% ver fun√ß√£o "svm_multiclasse"
 modelo = svm_multiclasse(matriz_treinamento_mao,rotulos_treinamento_mao);
 [precisao_treinamento, matriz_confusao_treinamento] = calcular_precisao_mao(modelo,matriz_treinamento_mao,rotulos_treinamento_mao)
 [precisao_teste, matriz_confusao_teste] = calcular_precisao_mao(modelo,matriz_teste_mao,rotulos_teste_mao)
 pause;
 %%
 %
-% InicializaÁ„o do sensor kinect; ver funÁ„o "iniciar_kinect"
+% Inicializa√ß√£o do sensor kinect; ver fun√ß√£o "iniciar_kinect"
 [himg, colorVid, depthVid] = iniciar_kinect;
 
 % Loop 'while' para cada imagem obtida pelo Kinect
@@ -31,14 +31,14 @@ while(ishandle(himg))
     [colorMap,~,colorMetaData] = getdata(colorVid);
     imshow(colorMap, [0 4096]);
     
-    % Verifica se È encontrado algum esqueleto
+    % Verifica se √© encontrado algum esqueleto
     if sum(depthMetaData.IsSkeletonTracked) > 0
         idx = find(depthMetaData.IsSkeletonTracked);
-        % Podem ser encontrados atÈ seis pessoas
-        % idx È o Ìndice referente a pessoa encontrada
+        % Podem ser encontrados at√© seis pessoas
+        % idx √© o √≠ndice referente a pessoa encontrada
         
         if(idx~=0)
-            % Obtendo regi„o de interesse a partir da imagem fornecida pelo
+            % Obtendo regi√£o de interesse a partir da imagem fornecida pelo
             % kinect
             limites = gerar_roi(depthMetaData,idx);
             
